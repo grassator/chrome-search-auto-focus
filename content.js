@@ -1,23 +1,9 @@
+/* global document */
 (function(window){
-  var initialized = false,
-      timerId;
+  var inputTagRegex = /^(?:input|select|textarea|button)$/i;
 
-  function checkFocus() {
-
-    if(initialized) {
-      clearInterval(timerId);
-      return;
-    }
-
-    // checking that we don't steal focus from an important 
-    var currentFocus = document.querySelector(':focus, [autofocus]');
-
-    if(currentFocus && currentFocus.tagName.match(/input|select|textarea|button/i)) {
-      return;
-    }
-
-    //trying to find a search field
-    var searchField = document.querySelector(
+  function findAppropriateField() {
+    return document.querySelector(
       // these are sane versions of what search field is named
       'input[id=search], input[name=search],' + 
       'input[id*=search], input[name*=search],' +
@@ -25,20 +11,32 @@
       // and these are purely empirical
       'input[name=q], [id*=search] input[type=text], [id*=search] input[type=search]'
     );
-
-    if(searchField) {
-      initialized = true;
-      searchField.focus();
-    }
   }
 
-  // start polling page until we find or the page is fully loaded
-  checkFocus();
-  timerId = setInterval(checkFocus, 500);
+  function eventHasPrintableCharacter(e) {
+    return !/[\x00-\x1F]/.test(String.fromCharCode(e.charCode));
+  }
 
-  // last resort
-  window.addEventListener("load", function() {
-    clearInterval(timerId);
-    checkFocus();
+  function checkTarget(e) {
+    return inputTagRegex.test(e.target.tagName);
+  }
+
+  window.addEventListener('keypress', function(e){
+    // if something else took care of this event or if the target of
+    // the event is an input field then just ignore it
+    if(e.defaultPrevented || checkTarget(e)) {
+      return;
+    }
+
+    var input = findAppropriateField();
+
+    // only focus input if there is one and user
+    // pressed a non-whitespace printable
+    if(input && eventHasPrintableCharacter(e)) {
+      e.target = input;
+      input.focus();
+    }
+
   }, false);
+
 })(this);

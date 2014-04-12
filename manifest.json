@@ -2,8 +2,8 @@
   "manifest_version": 2,
 
   "name": "Search Auto-Focus",
-  "description": "Focuses search field on websites that don't do it themselves",
-  "version": "1.0",
+  "description": "Auto-focuses search field on websites when you start to type",
+  "version": "2.0",
 
   "icons": {
     "48": "logo-48.png",
