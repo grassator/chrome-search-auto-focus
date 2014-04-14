@@ -18,7 +18,7 @@
   }
 
   function checkTarget(e) {
-    return inputTagRegex.test(e.target.tagName);
+    return inputTagRegex.test(e.target.tagName) || e.target.contentEditable;
   }
 
   window.addEventListener('keypress', function(e){
