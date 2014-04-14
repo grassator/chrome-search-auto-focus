@@ -18,7 +18,9 @@
   }
 
   function checkTarget(e) {
-    return inputTagRegex.test(e.target.tagName) || e.target.contentEditable;
+    console.log(e.target);
+    return inputTagRegex.test(e.target.tagName) || 
+           (e.target.contentEditable && e.target.contentEditable !== "inherit");
   }
 
   window.addEventListener('keypress', function(e){
