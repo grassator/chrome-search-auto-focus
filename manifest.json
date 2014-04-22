@@ -3,7 +3,7 @@
 
   "name": "Search Auto-Focus",
   "description": "Auto-focuses search field on websites when you start to type",
-  "version": "2.2",
+  "version": "2.3",
 
   "icons": {
     "48": "logo-48.png",

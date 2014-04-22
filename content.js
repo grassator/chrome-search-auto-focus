@@ -18,7 +18,6 @@
   }
 
   function checkTarget(e) {
-    console.log(e.target);
     return inputTagRegex.test(e.target.tagName) || 
            (e.target.contentEditable && e.target.contentEditable !== "inherit");
   }
